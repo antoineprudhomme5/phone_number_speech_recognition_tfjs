@@ -39,3 +39,13 @@ body {
 .title, .description {
   text-align: center;
 }
+
+.controls {
+  display: block;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.controls button {
+  display: inline-block;
+}

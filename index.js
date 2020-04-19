@@ -18,6 +18,10 @@ const phoneNumberLength = 10;
 const phoneNumberEl = document.getElementById("phoneNumber");
 const digits = [0];
 
+const startBtnEl = document.getElementById("start");
+const stopBtnEl = document.getElementById("stop");
+stopBtnEl.disabled = true;
+
 function refreshPhoneNumber() {
   phoneNumberEl.innerHTML = '';
   for (let i = 0; i < phoneNumberLength; i++) {
@@ -35,7 +39,16 @@ function handleDigitPredicted(digitWords) {
   }
 }
 
-function predictPhoneNumber() {
+function stopListening() {
+  stopBtnEl.disabled = true;
+  startBtnEl.disabled = false;
+  recognizer.stopListening();
+}
+
+function startListening() {
+  stopBtnEl.disabled = false;
+  startBtnEl.disabled = true;
+
   // Array of words that the recognizer is trained to recognize.
   const words = recognizer.wordLabels();
 
@@ -65,7 +78,8 @@ async function app() {
   recognizer = speechCommands.create("BROWSER_FFT");
   await recognizer.ensureModelLoaded();
   refreshPhoneNumber();
-  predictPhoneNumber();
+  startBtnEl.addEventListener('click', startListening);
+  stopBtnEl.addEventListener('click', stopListening);
 }
 
 app();
