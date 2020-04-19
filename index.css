@@ -1,0 +1,24 @@
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#phoneNumber {
+  display: block;
+  text-align: center;
+}
+
+.digit {
+  display: inline-block;
+  padding-bottom: 10px;
+  border-bottom: 1px solid black;
+  width: 20px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.digit:not(:last-child) {
+  margin-right: 10px;
+}

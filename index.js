@@ -1,6 +1,6 @@
 let recognizer;
 
-const numberWordToNumber = new Map([
+const digitWordToDigit = new Map([
   ["zero", 0],
   ["one", 1],
   ["two", 2],
@@ -12,24 +12,40 @@ const numberWordToNumber = new Map([
   ["eight", 8],
   ["nine", 9],
 ]);
+const digitWords = Array.from(digitWordToDigit.keys());
 
-const numberWords = Array.from(numberWordToNumber.keys());
+const phoneNumberLength = 10;
+const phoneNumberEl = document.getElementById("phoneNumber");
+const digits = [0];
 
-function handleNumberPredicted(numberWord) {
-  console.log(numberWord, numberWordToNumber.get(numberWord));
+function refreshPhoneNumber() {
+  phoneNumberEl.innerHTML = '';
+  for (let i = 0; i < phoneNumberLength; i++) {
+    const digitEl = document.createElement('div');
+    digitEl.className = "digit";
+    digitEl.textContent = digits[i] === undefined ? '\xa0' : digits[i];
+    phoneNumberEl.appendChild(digitEl);
+  }
 }
 
-function predictNumber() {
+function handleDigitPredicted(digitWords) {
+  if (digits.length < phoneNumberLength) {
+    digits.push(digitWordToDigit.get(digitWords));
+    refreshPhoneNumber();
+  }
+}
+
+function predictPhoneNumber() {
   // Array of words that the recognizer is trained to recognize.
   const words = recognizer.wordLabels();
 
   recognizer.listen(
     ({ scores }) => {
       // Turn scores into a list of (score,word) pairs.
-      // But keep only numbers
+      // But keep only digits
       scores = Array.from(scores)
         .map((s, i) => ({ score: s, word: words[i] }))
-        .filter((s, i) => numberWords.includes(words[i]));
+        .filter((s, i) => digitWords.includes(words[i]));
 
       // Find the most probable word.
       let maxScoreIndex = 0;
@@ -39,7 +55,7 @@ function predictNumber() {
         }
       }
 
-      handleNumberPredicted(scores[maxScoreIndex].word);
+      handleDigitPredicted(scores[maxScoreIndex].word);
     },
     { probabilityThreshold: 0.75, overlapFactor: 0.1 }
   );
@@ -48,7 +64,8 @@ function predictNumber() {
 async function app() {
   recognizer = speechCommands.create("BROWSER_FFT");
   await recognizer.ensureModelLoaded();
-  predictNumber();
+  refreshPhoneNumber();
+  predictPhoneNumber();
 }
 
 app();
