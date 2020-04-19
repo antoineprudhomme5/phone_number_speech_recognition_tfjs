@@ -16,11 +16,17 @@ const digitWords = Array.from(digitWordToDigit.keys());
 
 const phoneNumberLength = 10;
 const phoneNumberEl = document.getElementById("phoneNumber");
-const digits = [0];
+let digits = [0];
 
 const startBtnEl = document.getElementById("start");
 const stopBtnEl = document.getElementById("stop");
+const clearBtnEl = document.getElementById("clear");
 stopBtnEl.disabled = true;
+
+function clearPhoneNumber() {
+  digits = [0];
+  refreshPhoneNumber();
+}
 
 function refreshPhoneNumber() {
   phoneNumberEl.innerHTML = '';
@@ -80,6 +86,7 @@ async function app() {
   refreshPhoneNumber();
   startBtnEl.addEventListener('click', startListening);
   stopBtnEl.addEventListener('click', stopListening);
+  clearBtnEl.addEventListener('click', clearPhoneNumber);
 }
 
 app();
