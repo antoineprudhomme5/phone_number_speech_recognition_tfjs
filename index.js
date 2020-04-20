@@ -29,11 +29,11 @@ function clearPhoneNumber() {
 }
 
 function refreshPhoneNumber() {
-  phoneNumberEl.innerHTML = '';
+  phoneNumberEl.innerHTML = "";
   for (let i = 0; i < phoneNumberLength; i++) {
-    const digitEl = document.createElement('div');
+    const digitEl = document.createElement("div");
     digitEl.className = "digit";
-    digitEl.textContent = digits[i] === undefined ? '\xa0' : digits[i];
+    digitEl.textContent = digits[i] === undefined ? "\xa0" : digits[i];
     phoneNumberEl.appendChild(digitEl);
   }
 }
@@ -84,9 +84,9 @@ async function app() {
   recognizer = speechCommands.create("BROWSER_FFT");
   await recognizer.ensureModelLoaded();
   refreshPhoneNumber();
-  startBtnEl.addEventListener('click', startListening);
-  stopBtnEl.addEventListener('click', stopListening);
-  clearBtnEl.addEventListener('click', clearPhoneNumber);
+  startBtnEl.addEventListener("click", startListening);
+  stopBtnEl.addEventListener("click", stopListening);
+  clearBtnEl.addEventListener("click", clearPhoneNumber);
 }
 
 app();

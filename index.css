@@ -3,6 +3,7 @@ body {
   margin: 0;
   box-sizing: border-box;
   background-color: #eee;
+  font-size: 1.5em;
 }
 
 #phoneNumber {
@@ -38,6 +39,7 @@ body {
 
 .title, .description {
   text-align: center;
+  margin-bottom: 5px;
 }
 
 .controls {
@@ -48,4 +50,10 @@ body {
 
 .controls button {
   display: inline-block;
+}
+
+.disclaimer {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: .6em;
 }
